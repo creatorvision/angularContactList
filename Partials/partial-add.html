@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="css/partial-add.css">
+<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+<form id="addForm" class="navbar-form">
+    <div class="form-group">
+        <h2 id="heading2"> ADD NEW CONTACT </h2>
+          <!-- labels-->
+          <div class="col-xs-6">
+            <label id="label" for="name"> NAME </label><br/>
+            <label id="label" for="address"> ADDRESS </label><br/>
+            <label id="label" for="dateofbirth"> D.O.B </label>
+          </div>
+
+          <!-- Input  -->
+          <div class="col-xs-6">
+           <input id="inp" type="text" class="input-group" data-ng-model="newContact.name" placeholder="Name">
+           <input id="inp" type="text" class ="input-group" data-ng-model="newContact.address" placeholder="Address">
+           <input id="inp" type="date" class ="input-group" data-ng-model="newContact.dob" placeholder="Date of Birth">
+          </div>
+        <buttont id="btn-Sv" type="button" class="btn btn-primary" ng-data-click="addFriendInList()">Save </button>
+    </div>
+</form>

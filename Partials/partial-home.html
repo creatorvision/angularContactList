@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="css/partial-home.css">
+<div class="FriendList" data-ng-controller="displayFriends">
+   <ul class="list-group">
+    <li class="list-group-item" data-ng-repeat="fr in frlist | filter:filter.name">
+        <div class="row">
+            <div class="col-xs-4 col-md-2">
+                <a href="#" class="thumbnail">
+                <img src="Resources/personIcon.png" alt="Image not Found">
+                </a>
+            </div>
+            <div class="col-xs-8 col-md-4">
+                Name: {{fr.name}}<br/>
+                Address: {{fr.address}}<br/>
+                D.O.B : {{fr.dob}}
+            </div>
+        </div>
+    </li>
+   </ul>
+   <div id="addNew">
+       <a class"btn btn-primary" type="button">
+         <span class="glyphicon glyphicon-plus-sign" ui-sref=".add">ADD</span>
+       </a>
+   </div>
+</div>
+<div ui-view></div>

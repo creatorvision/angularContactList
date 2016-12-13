@@ -1,0 +1,33 @@
+<!Doctype html>
+<html data-ng-app="routerApp">
+    <head>
+        <title>Using AngularJS  Directives and Data Binding</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script><!-- Angular UI included-->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> <!-- Bootstrap library included -->
+        <script src="js/app.js"></script>
+        <style>
+            /* style for the site */
+        </style>
+    </head>
+
+    <body >
+        <!-- NAVIGATION -->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" ui-sref="#">CONTACT LIST</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="about"><span class="glyphicon glyphicon-plus-sign" >Add</span></a></li>
+            </ul>
+            <div id="search" class="input-group" style="float:right;margin-top:10px;margin-right:10px">
+                <input type ="text" class="form-control" placeholder="Name" data-ng-model="filter.name"/> <!-- Angular Model-->
+            </div>
+        </nav>
+        <!-- END OF NAVIGATION-->
+        <div class="container">
+           <div ui-view></div>
+        </div>
+    </body>
+</html>

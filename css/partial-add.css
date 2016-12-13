@@ -1,0 +1,53 @@
+#label{
+
+    font-family: 'Libre Baskerville', serif;
+    font-size: 130%;
+}
+#addForm{
+
+    padding-top:30px;
+    padding-bottom :130px;
+    /*background-color:slategrey+cadetblue; */
+    /* Safari 4-5, Chrome 1-9 */
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(skyblue), to(lightskyblue));
+
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, skyblue, lightskyblue);
+
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, skyblue, lightskyblue);
+
+    /* IE 10 */
+    background: -ms-linear-gradient(top, skyblue, lightskyblue);
+
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, skyblue, lightskyblue);
+}
+#btn-Sv{
+
+    margin:auto;
+    width :30%;
+    margin-top : 40px;
+    margin-right:35%;
+    margin-left:35%;
+    
+}
+#heading2{
+
+    font-weight:bold;
+    flex:center;
+    text-align:center;
+    vertical-align:center;
+    padding-bottom:30px;
+}
+#inp{
+
+    width:100%;
+    padding:2px;
+}
+.form-group{
+
+    width: 70%;
+    margin-right :10%;
+    margin-left: 15%;
+}
