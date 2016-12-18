@@ -8,7 +8,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         // HOME STATES AND NESTED VIEWS ========================================
         .state('home', {
             url: '/home',
-            templateUrl: 'Partials/partial-home.html'
+            templateUrl: 'Partials/partial-home.html',
+            css:'css/partial-home.css'
         })
         
         // nested form for adding new contact
@@ -17,58 +18,140 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             templateUrl:'Partials/partial-add.html',
             css:'css/partial-home.css'
         })
-        
-        // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-        .state('about', {
-            url: '/about',
-            views: {
-                '': { templateUrl: 'Partials/partial-about.html' },
-                'columnOne@about': { template: 'Look I am a column!' },
-                'columnTwo@about': { 
-                    templateUrl: 'Partials/table-data.html',
-                    controller: 'scotchController'
-                }
-            }
-            
+        .state('edit',{
+            url:'/editcontact',
+            templateUrl:'Partials/partial-edit.html',
+            css:'css/partial-edit.css'
         });
         
+        // // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
+        // .state('about', {
+        //     url: '/about',
+        //     views: {
+        //         '': { templateUrl: 'Partials/partial-about.html' },
+        //         'columnOne@about': { template: 'Look I am a column!' },
+        //         'columnTwo@about': { 
+        //             templateUrl: 'Partials/table-data.html',
+        //             controller: 'scotchController'
+        //         }
+        //     }
+            
+        // });
+        
 });
 
-routerApp.controller('scotchController', function($scope) {
-    
-    $scope.message = 'test';
-   
-    $scope.scotches = [
-        {
-            name: 'Macallan 12',
-            price: 50
-        },
-        {
-            name: 'Chivas Regal Royal Salute',
-            price: 10000
-        },
-        {
-            name: 'Glenfiddich 1937',
-            price: 20000
-        }
-    ];
-    
-});
+var friendList = new Array; // List of all the friends 
+var global_Personid=0; // Initial count of the menmbers 
 
-
-var displayListAll=function(){
-        var friendList=[sg,aj,tr,mj,kr,sm,ag,ck,ms];
+routerApp.factory("displayAll",function(){ 
         return friendList;  
-}
-routerApp.factory("displayAll",displayListAll); // Retrieve all the friends
-routerApp.controller("displayFriends",function($scope,displayAll){
-    console.log("Display Friend Controller is loaded");
-    $scope.frlist=displayAll;
+});
 
-    $scope.addFriendInList=function(){
-        // code to add new element
+routerApp.factory("passData",function(){ //factory for passing data b/w displayFriends and editContact controllers
+    var savedData={}
+    function set(data){
+        savedData = data;
+    }
+    function get(){
+        return savedData;
+    }
+    return{
+        set:set,
+        get:get
     }
 });
+
+routerApp.controller("editContact",function($scope,$location,passData){
+    $scope.frData=passData.get().friend;
+    $scope.index=passData.get().idx;
+    console.log("Recieved data to edit");
+    $scope.nameForHeading=$scope.frData.name.toUpperCase(); // Changing all the character of name to uppercase.
+    $scope.upContact={
+        name:"",
+        address:"",
+        dob:""
+    };
+
+    $scope.updateValues=function(){
+        if($scope.upContact.name != "")
+        { 
+            $scope.frData.name=$scope.upContact.name;
+        }
+        if($scope.upContact.address != "")
+        {
+            $scope.frData.address=$scope.upContact.address;
+        }
+        if($scope.upContact.dob != "")
+        {
+            $scope.frData.dob=$scope.upContact.dob;
+        }
+        friendList.splice($scope.index,1,$scope.frData);
+        $location.path('/home')+"successfully updated";
+    }
+    
+});
+
+routerApp.controller("displayFriends",['$scope','$window','displayAll','passData',function($scope,$window,displayAll,passData){
+    console.log("Display Friend Controller is loaded");
+    $scope.newContact={};
+    $scope.res=false; // It will decied --> to show the success/ error div or not.
+    $scope.message=""; // Error or Success message
+    $scope.se; // It will tell us is it an error or success.
+    $scope.addFriendInList=function(){
+       try
+       {
+           var nfr = new Person(global_Personid++,$scope.newContact.name,$scope.newContact.address,$scope.newContact.dob);
+           friendList.push(nfr); // List containing the objects of the person class
+           $scope.res=true;
+           $scope.message="Successfully added a new contact."
+           $scope.se=1 // 1 here means success
+       }
+       catch(err)
+       {
+           $scope.res=false;
+           $scope.se=0 // 0 here means error
+           $scope.message=err.message;
+       }
+    }
+    $scope.deleteContact=function(id){
+        console.log(" In delete Contact method");
+        //friendList = friendList.splice(id-1,1);
+        try{
+            for(i=0;i<friendList.length;i++)
+                {
+                    if(friendList[i].id == id)
+                    {
+                        friendList.splice(i,1);
+                    }
+                }
+            $scope.res=true;
+            $scope.se=1
+            $scope.message="Deleted the selected contact"
+        }
+        catch(err)
+        {
+            $scope.res=false;
+            $scope.se=0
+            $scope.message=err.message;
+        }
+    }
+    $scope.passtoedit=function(fr){
+        console.log("passing data to edit controller");
+        var index = -1;
+        for(i=0;i<friendList.length;i++)
+        {
+            if(friendList[i].id == fr.id)
+            {
+                index = i;
+            }
+        }
+        dataobj={
+            friend:fr,
+            idx:index};
+        passData.set(dataobj);
+    }
+    $scope.frlist=$window.friendList;
+}]);
 
 class Person {
     constructor(id,name,address,dob){
@@ -78,35 +161,3 @@ class Person {
         this.dob=dob;
     }
 }
-
-var aj = new Person(1,"Akshat Jhalani","D-702,Marvel Fria","01/01/1994");
-var sg = new Person(2,"Shaifali Gupta","A-56, Triveni Nagar","03/11/1987");
-var tr = new Person(3,"Tejas Ratnapogol","khatraj, pune","01/01/1994");
-var mj = new Person(4,"Monika Jengaria","Ganga Constella","11/09/1992");
-var ck = new Person(5,"Chinmay Kishore","Bollywood Theater, wadgaon sheri","01/01/1994");
-var ms = new Person(6,"Mandeep Singh Beniwal","Bollywood Theater, wadgaon sheri", "01/01/1994");
-var kr = new Person(7,"Kumar Rahul","Bollywood Theater, wadgaon sheri","01/01/1994");
-var ag = new Person(8,"Arpita Ghosh","Ganga Constella","01/01/1994");
-var sm = new Person(9,"Suvidha Maheshawari","Kahin Dur in pune ","01/01/1994");
-
-var global_Personid=9;
-
-// CRUD operations on FriendList =========================================
-
-//Friend class is needed to the created
-
-// var displayList=function(id){
-//     var friendList;
-//     switch(id){
-//         case a:  { return friendList =["b","d","e"]; }
-//         case b:  { return friendList =["a","c","d"]; }
-//         case c:  { return friendList =["b","e"]; }
-//         case d:  { return friendList =["a","b"]; }
-//         case e:  { return friendList =["a","e"]; }
-//     }
-// }
-
-//routerApp.factory("addFriend",addFriend(friend)); // Create
-//routerApp.factory("dispFriendsList",displayList(id)); // Retrive
-//routerApp.factory("updateFriend",updateFriend(friend)); // update
-//routerApp.factory("unFriend",deleteFriend(id)); //Delete

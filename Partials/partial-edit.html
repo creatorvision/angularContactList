@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="css/partial-addedit.css">
+<link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+<div class="container">
+    <form id="editform" class="navbar-form" data-ng-controller="editContact" >
+        <div class="form-group">
+            <h2 id="heading2" >EDIT {{nameForHeading}}'S DETAILS</h2> 
+                <!-- labels-->
+                <div class="col-xs-6">
+                    <label id="label" for="name"> NAME </label><br/>
+                    <label id="label" for="address"> ADDRESS </label><br/>
+                    <label id="label" for="dateofbirth"> D.O.B </label>
+                </div>
+
+                <!-- Input  -->
+                <div class="col-xs-6">
+                <input id="inp" type="text" class="input-group" data-ng-model="upContact.name" placeholder="{{frData.name}}">
+                <input id="inp" type="text" class ="input-group" data-ng-model="upContact.address" placeholder="{{frData.address}}">
+                <input id="inp" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" 
+                 class ="input-group" data-ng-model="upContact.dob" placeholder="{{frData.dob}}">
+                </div>
+                <buttont id="btn-Sv" type="button" class="btn btn-primary" data-ng-click="updateValues()">UPDATE</button>
+         </div>
+    </form>
+</div>

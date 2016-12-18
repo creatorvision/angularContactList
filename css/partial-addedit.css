@@ -3,7 +3,8 @@
     font-family: 'Libre Baskerville', serif;
     font-size: 130%;
 }
-#addForm{
+
+#addForm, #editform{
 
     padding-top:30px;
     padding-bottom :130px;

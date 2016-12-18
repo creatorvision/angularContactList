@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="css/partial-add.css">
+<link rel="stylesheet" href="css/partial-addedit.css">
 <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+<script src="js/partial-add.js"></script>
 <form id="addForm" class="navbar-form">
     <div class="form-group">
         <h2 id="heading2"> ADD NEW CONTACT </h2>
@@ -12,10 +13,11 @@
 
           <!-- Input  -->
           <div class="col-xs-6">
-           <input id="inp" type="text" class="input-group" data-ng-model="newContact.name" placeholder="Name">
-           <input id="inp" type="text" class ="input-group" data-ng-model="newContact.address" placeholder="Address">
-           <input id="inp" type="date" class ="input-group" data-ng-model="newContact.dob" placeholder="Date of Birth">
+           <input id="inp" type="text" class="input-group" data-ng-model="newContact.name" ng-required=true placeholder="Name">
+           <input id="inp" type="text" class ="input-group" data-ng-model="newContact.address" ng-required=true placeholder="Address">
+           <input id="inp" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+            class ="input-group" data-ng-model="newContact.dob" ng-required=true placeholder="Date of Birth">
           </div>
-        <buttont id="btn-Sv" type="button" class="btn btn-primary" ng-data-click="addFriendInList()">Save </button>
+        <buttont id="btn-Sv" type="button" class="btn btn-primary" data-ng-click="addFriendInList()">Save </button>
     </div>
 </form>

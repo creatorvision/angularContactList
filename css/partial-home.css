@@ -1,4 +1,13 @@
 #addNew{
     align-self: center;
-    font-weight: bold;
+    font-weight: bolder;
+    flex:center;
+    text-align:center;
+    vertical-align:center;
+}
+#del{
+    float:right;
+}
+#edit{
+    float:right;
 }
